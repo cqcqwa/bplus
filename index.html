@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link href="style/css.css" rel="stylesheet" type="text/css">
+	<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+	<title>BPLUS 能力中心随机分组</title>	
+</head>
+<body>
+		<div class="box">
+				<p class="Title" style="font-size: 42px;">B PLUS</p>
+				<p class="Title">B+ 能力中心分组</p>
+				<div class="arr">
+					<p class="Title">A组</p>
+					<p class="Title">B组</p>
+				</div>
+				
+				<ul class="prizeList">
+				
+				</ul>
+				<div class="submit" data-id="0">开 始</div>
+				</div>
+</body>
+<script type="text/javascript">
+	var arr = [  {"id":"1","name":"偶哥" },
+		{"id":"2","name":"卢秋坪" },
+		{"id":"3","name":"陈强" },
+		{"id":"4","name":"媛媛" },
+		{"id":"5","name":"龙舒婷" },
+		{"id":"6","name":"李金瞳" },
+		{"id":"7","name":"周信鹏" },
+		{"id":"8","name":"陈漫玲" },
+		{"id":"9","name":"罗丹妮" },
+		{"id":"10","name":"金琳琳" },
+		{"id":"11","name":"黄沁怡" },
+		{"id":"12","name":"李嘉慧" },
+		{"id":"13","name":"陈桂萍" },
+		{"id":"14","name":"唐剑"}]
+	var status = 0
+	//从一个给定的数组arr中,随机返回num个不重复项
+			function getArrayItems(arr, num) {
+				//新建一个数组,将传入的数组复制过来,用于运算,而不要直接操作传入的数组;
+				var temp_array = new Array();
+				for (var index in arr) {
+					temp_array.push(arr[index]);
+				}
+				//取出的数值项,保存在此数组
+				var return_array = new Array();
+				for (var i = 0; i<num; i++) {
+					//判断如果数组还有可以取出的元素,以防下标越界
+					if (temp_array.length>0) {
+						//在数组中产生一个随机索引
+						var arrIndex = Math.floor(Math.random()*temp_array.length);
+						//将此随机索引的对应的数组元素值复制出来
+						return_array[i] = temp_array[arrIndex];
+						//然后删掉此索引的数组元素,这时候temp_array变为新的数组
+						temp_array.splice(arrIndex, 1);
+					} else {
+						//数组中数据项取完后,退出循环,比如数组本来只有10项,但要求取出20项.
+						break;
+					}
+				}
+				return return_array;
+			}
+		var interval;
+		$(".submit").click(function(){
+			// var status = $(this).data("id");
+			var ints ;
+			if(status == 0){
+				// $.get("data.json",{},function(data){
+					// if(data){
+						  // if(data.code=="1"){
+							function times(){
+								var ArrList=arr;
+								var res = getArrayItems(ArrList,14);
+								str='';
+								for(o in res){
+									num = parseInt(o)+1;
+									str+='<li data-id="'+res[o].id+'">'+num+'、<span>'+res[o].name+'</span></li>';
+								}
+								$(".prizeList").html(str);
+							}
+							interval = setInterval(times,0);
+							// $(".submit").data("id","1");
+							status = 1
+							$(".submit").text("停止");
+						// }
+					// }else{  
+						// alert('Ajax error!');
+					// }
+				// },'json');
+			}else{
+				status = 0
+				clearInterval(interval);
+				// $(".submit").data("id","0");
+				$(".submit").text("开始");
+			}
+		})
+	
+	</script>
+</html>
